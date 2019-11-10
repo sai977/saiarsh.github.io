@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com  -->
+<!--  Last Published: Wed Oct 30 2019 01:26:31 GMT+0000 (UTC)  -->
+<html data-wf-page="5d8c1100055861c0b11603e2" data-wf-site="5d8c11000558613f561603d7">
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-146491716-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-146491716-2');
+  </script>
+
+  <meta charset="utf-8">
+  <title>Newyork Taxi Demand Prediction</title>
+  <meta content="Project 2" property="og:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="../css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="../css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="../css/whitney-li-portfolio.webflow.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+  <script type="text/javascript">WebFont.load({  google: {    families: ["Montserrat:100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic"]  }});</script>
+  <!-- [if lt IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" type="text/javascript"></script><![endif] -->
+  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="../images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link href="../images/webclip.png" rel="apple-touch-icon">
+</head>
+
+<body>
+  <div data-collapse="medium" data-animation="default" data-duration="400" class="navigation w-nav">
+    <div class="navigation-items"><a href="../index.html" class="logo-link w-nav-brand"><img src="../images/whitney-logo.png" width="58" alt="" class="logo-image"></a>
+      <div class="navigation-wrap">
+        <nav role="navigation" class="navigation-items w-nav-menu"><a href="../index.html" class="navigation-item w-nav-link">Portfolio</a><a href="../about.html" class="navigation-item w-nav-link">About</a></nav>
+        <div class="menu-button w-nav-button"><img src="../images/menu-icon_1menu-icon.png" width="22" alt="" class="menu-icon"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+      <div id="w-node-f2c6de040bbf-b11603e2">
+        <h1 class="heading-jumbo">Newyork Taxi Demand Prediction</h1>
+        <div class="paragraph-light">Machine Learning</div><br /><br />
+              <div class="image-block"><img src="../images/taxi.png" width="950" alt="">
+      </div>
+    </div>
+
+    
+      <h1 class="heading-8">Problem Statement</h1>
+      <p>Given a region and a particular time interval, predict the no of pickups as accurately as possible in that region and nearby regions.Based on the data, machine learning model predicts the pickup demand of cabs in 10 minutes time frame. In this python notebook different machine learning model have been trained and accuracy is tested. </p>
+      <h5>Objectives</h5>
+	  <h5>Type of Machine Learning Problem</h5>
+	  <p>The given problem is a Regression problem</p>
+	  <h5>Performance metric</h5>
+		<ul>
+		<li>MAPE (Mean Absolute Percentage Error)</li>
+		<li>MSE (Mean Squared Error)</li>
+		</ul>
+	  <h5>Pre-processing And Data Preparation</h5>
+	  
+	    <h6>Clustering/Segmentaion:</h6>
+		<p>Now we break whole of NYC into clusters/segments/regions. We choose the (lat,long) of pickup as features and we apply K-Means clustering algorithm(we find the right K using GridSearch). On choosing a cluster size of 40, we find an optimal min inter-cluster distance. Finally, we assign the cluster no. to each data point</p>
+
+		<h6>Time-binning:</h6>
+		<p>We use the unix time-stamps to find the 10 min time-bins each data point belongs to(index of the 10min time interval to which that data point belongs)</p>
+
+		<h6>Smoothing time-series data:</h6>
+		<p>In our time-series data plot, there will be some 10-min bins where there are no pickups. And its not useful to predict zero pickups for a data point and moreover these points will create a problem in Moving Averages(using ratios). Thus, we smooth our training data(2015)(as in smoothing we are looking at future values) and fill with zero our test data(2016)</p>
+
+		<h6>Fourier Transform:</h6>
+		<p>From the Fourier transform plot of our time-series data we find the top amplitudes and corresponding frequencies</p>
+	  
+	  
+	  
+	  
+	  
+	  <p>We Generate batches of tensor image data with real-time data augmentation using ImageDataGenerator in keras.while generating we keep shear_range,zoom_range to 0.2, rescale it to 1./255 and horizontal flip to be true.The following is the code for data generation.</p>
+	  <h5>Applying Machine Learning models</h5>
+	   <table style="width:100%">
+		<tr>
+		<th>S.NO.</th>
+		<th>MODEL</th>
+		<th>MAPE (Train)</th>
+		<th>MAPE (Test)</th>
+		</tr>
+		<tr>
+		<th>1</th>
+		<th>Baseline Model -</th>
+		<th>0.12477882091940766</th>
+		<th>0.12137217161272074<th>
+		</tr>
+		<tr>
+		<th>2</th>
+		<th>Exponential Averages Forecasting</th>
+		<th>0.11976904266333344</th>
+		<th>0.11613179453264473</th>
+		</tr>
+		<tr>
+		<th>3</th>
+		<th>Linear Regression</th>
+		<th>0.11876933125313564</th>
+		<th>0.1150793802491695<th>
+		</tr>
+		<tr>
+		<th>4</th>
+		<th>Random Forest Regression</th>
+		<th>0.12033215123281191</th>
+		<th>0.11584346054306564<th>
+		</tr>
+		<tr>
+		<th>5</th>
+		<th>XgBoost Regression</th>
+		<th>0.11173065224902116</th>
+		<th>0.11314275447362084<th>
+		</tr>
+		</table>
+		<h5>Procedure</h5>
+		<ol>
+			<li>At first we have done cleaning based on several features and removed the outliers from data(jan 2015).</li>
+
+			<li>Then we have got different regions based on clusters formed from cleaned_data.</li>
+
+			<li>After clustering , we have created the different baseline models from the jan 2015 and jan 2016 data and analysed which baseline model perfomed the best on jan 2016 data based on MAPE(mean absolute percentage error) and MSE(mean squared error) metric.</li>
+
+			<li>After that we have taken the previous five values as the feature and performed the feature engineering due to which some feature had been added to data so that it can perform well.</li>
+
+			<li>we have also include the exponential average forecasting feature and other features to the data.</li>
+
+6.Now after all of these steps we have applied the different models like linear Regression , Random Forest and Xgboost Regression models</li>
+</ol>
+		
+		<h5>Conclusion</h5>
+		<ol>
+		<li>XGBoost Regression has performed so well that have less than 12% Error Metric for train and test data after new features.</li>
+
+		<li> Simple Model like Linear Regression have performed even better than Random Forest Regressor not by so much but it is a better performance by Linear Model that have less than 11% Error Matric for train and test data that is less than 12%</li>
+
+		<li>Performance of Random forest Regression is also remarkable where error for Test is less than 12% but the error on train is little higher than 12% but performance is good.</li>
+
+		<li> Baseline Model and Exponential Average Forecasting model didn't perform that well where, Baseline model have the bad performance in compare with other models.</li>
+		</ol>
+  <div class="footer-wrap">
+    <div class="div-block-5"><img src="../images/up.png" width="31" alt="" class="image-5"><a href="../index.html" class="logo-link w-nav-brand"><img src="../images/whitney-logo.png" width="58" alt="" class="logo-image image-4"></a></div>
+    <div class="footer-links"><a href="https://www.linkedin.com/in/sai-charan-arishanapally-4926ba154/" target="_blank" class="footer-item">Linkedin</a><a href="https://github.com/sai977" target="_blank" class="footer-item">GITHUB</a><a href="https://medium.com/@saicharanars" target="_blank" class="footer-item">Medium</a></div>
+  </div>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <script src="../js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+</body>
+</html>
